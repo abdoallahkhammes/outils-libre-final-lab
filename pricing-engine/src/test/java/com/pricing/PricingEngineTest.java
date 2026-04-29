@@ -1,8 +1,8 @@
-package com.pricing;
+package test.java.com.pricing;
 
-import org.junit.jupiter.api.Test;
 import java.util.*;
-import static org.junit.jupiter.api.Assertions.*;
+
+import com.pricing.PricingEngine;
 
 class PricingEngineTest {
     @Test
@@ -13,6 +13,11 @@ class PricingEngineTest {
         double result = engine.calculate("REGULAR", prices, qties, "");
         // subtotal = 200, tax=40, disc=0 => 240
         assertEquals(240.0, result, 0.01);
+    }
+
+    private void assertEquals(double d, double result, double e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'assertEquals'");
     }
 
     @Test
