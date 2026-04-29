@@ -1,32 +1,51 @@
-package test.java.com.pricing;
+package com.pricing;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import java.util.*;
-
-import com.pricing.PricingEngine;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PricingEngineTest {
+    private PricingEngine engine;
+    
+    @BeforeEach
+    void setUp() {
+        engine = new PricingEngine();
+    }
+    
     @Test
     void testRegularCustomerNoDiscount() {
-        PricingEngine engine = new PricingEngine();
         List<Double> prices = Arrays.asList(100.0, 50.0);
-        List<Integer> qties = Arrays.asList(1, 2);
-        double result = engine.calculate("REGULAR", prices, qties, "");
-        // subtotal = 200, tax=40, disc=0 => 240
+        List<Integer> quantities = Arrays.asList(1, 2);
+        double result = engine.calculate("REGULAR", prices, quantities, "");
+        // Subtotal = 100 + 100 = 200, Tax = 40, Discount = 0
         assertEquals(240.0, result, 0.01);
     }
-
-    private void assertEquals(double d, double result, double e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'assertEquals'");
-    }
-
+    
     @Test
-    void testVipWithSave10() {
-        PricingEngine engine = new PricingEngine();
+    void testRegularCustomerWithSave10() {
         List<Double> prices = Arrays.asList(200.0);
-        List<Integer> qties = Arrays.asList(1);
-        double result = engine.calculate("VIP", prices, qties, "SAVE10");
-        // sub=200, disc=20+10=30, tax=40 => 210
-        assertEquals(210.0, result, 0.01);
+        List<Integer> quantities = Arrays.asList(1);
+        double result = engine.calculate("REGULAR", prices, quantities, "SAVE10");
+        // Subtotal = 200, Discount = 20, Tax = 40
+        assertEquals(220.0, result, 0.01);
+    }
+    
+    @Test
+    void testVipCustomerNoDiscount() {
+        List<Double> prices = Arrays.asList(100.0);
+        List<Integer> quantities = Arrays.asList(1);
+        double result = engine.calculate("VIP", prices, quantities, "");
+        // Subtotal = 100, Discount = 5 (5% VIP), Tax = 20
+        assertEquals(115.0, result, 0.01);
+    }
+    
+    @Test
+    void testVipCustomerWithSave20() {
+        List<Double> prices = Arrays.asList(100.0);
+        List<Integer> quantities = Arrays.asList(1);
+        double result = engine.calculate("VIP", prices, quantities, "SAVE20");
+        // Subtotal = 100, Discount = 20 + 5 = 25, Tax = 20
+        assertEquals(95.0, result, 0.01);
     }
 }

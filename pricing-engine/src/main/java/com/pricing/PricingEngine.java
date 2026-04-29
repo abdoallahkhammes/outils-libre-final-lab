@@ -3,17 +3,30 @@ package com.pricing;
 import java.util.*;
 
 public class PricingEngine {
-    public double calculate(String customerType, List<Double> prices, List<Integer> qties, String discountCode) {
-        double sub = 0;
-        for(int i=0;i<prices.size();i++) {
-            sub = sub + prices.get(i) * qties.get(i);
+    public double calculate(String customerType, List<Double> prices, List<Integer> quantities, String discountCode) {
+        // Calculate subtotal
+        double subtotal = 0;
+        for (int i = 0; i < prices.size(); i++) {
+            subtotal += prices.get(i) * quantities.get(i);
         }
-        double disc = 0;
-        if(discountCode.equals("SAVE10")) disc = sub * 0.1;
-        if(discountCode.equals("SAVE20")) disc = sub * 0.2;
-        if(customerType.equals("VIP")) disc = disc + sub * 0.05;
-        double tax = sub * 0.2;
-        double fin = sub - disc + tax;
-        return fin;
+        
+        // Calculate discount
+        double discount = 0;
+        if (discountCode.equals("SAVE10")) {
+            discount = subtotal * 0.10;
+        } else if (discountCode.equals("SAVE20")) {
+            discount = subtotal * 0.20;
+        }
+        
+        // VIP extra discount
+        if (customerType.equals("VIP")) {
+            discount += subtotal * 0.05;
+        }
+        
+        // Calculate tax
+        double tax = subtotal * 0.20;
+        
+        // Final price
+        return subtotal - discount + tax;
     }
 }
