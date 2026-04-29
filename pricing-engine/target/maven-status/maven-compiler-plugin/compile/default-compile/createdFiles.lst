@@ -1,1 +1,6 @@
+com/pricing/SubtotalCalculator.class
+com/pricing/model/DiscountCode.class
+com/pricing/TaxCalculator.class
+com/pricing/DiscountCalculator.class
 com/pricing/PricingEngine.class
+com/pricing/model/CustomerType.class
